@@ -1,0 +1,99 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "DM Serif Display", Georgia, serif;
+  --font-sans: "DM Sans", system-ui, sans-serif;
+
+  --color-surface-50: #fafaf9;
+  --color-surface-100: #f5f4f0;
+  --color-surface-200: #e8e6df;
+  --color-surface-300: #d4d0c5;
+  --color-surface-800: #2a2925;
+  --color-surface-900: #1c1b18;
+  --color-surface-950: #111009;
+
+  --color-ink-50: #fafaf9;
+  --color-ink-200: #e8e6df;
+  --color-ink-400: #8f8b7e;
+  --color-ink-600: #5a5749;
+  --color-ink-800: #2a2925;
+  --color-ink-900: #1c1b18;
+
+  --color-sage-300: #b8c9ae;
+  --color-sage-400: #96b089;
+  --color-sage-500: #738f66;
+  --color-sage-600: #567049;
+  --color-sage-700: #3f5434;
+
+  --color-amber-300: #f0c97a;
+  --color-amber-400: #e8b84a;
+  --color-amber-500: #d4971f;
+
+  --color-rose-300: #f0a898;
+  --color-rose-400: #e8826e;
+  --color-rose-500: #d45e47;
+  --color-rose-600: #b84330;
+
+  --color-sky-300: #98c4d8;
+  --color-sky-400: #6aaac4;
+  --color-sky-500: #4a8fa8;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  margin: 0;
+  padding: 0;
+}
+
+/* Dark mode class-based */
+.dark body {
+  background-color: var(--color-surface-950);
+  color: var(--color-ink-50);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-surface-300);
+  border-radius: 3px;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: var(--color-surface-800);
+}
+
+/* Smooth transitions for theme toggle */
+*, *::before, *::after {
+  transition-property: background-color, border-color, color;
+  transition-duration: 200ms;
+  transition-timing-function: ease;
+}
+
+/* Override transition for interactive elements */
+button, a, input, select, textarea {
+  transition-duration: 150ms;
+}
+
+/* Chart tooltip */
+.recharts-tooltip-wrapper {
+  outline: none !important;
+}
+
+/* Number input hide arrows */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
