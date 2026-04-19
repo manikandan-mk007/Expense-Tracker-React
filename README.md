@@ -27,7 +27,12 @@ This app helps users manage daily expenses, track spending habits, and visualize
 
 ##  Screenshots
 
-![App UI](screenshots/app.png)
+###  Dark vs Light Mode
+
+| Section      |  Dark Mode |  Light Mode |
+|-------------|------------|-------------|
+| Dashboard   | ![Dashboard Dark](screenshots/exdashboarddark.png) | ![Dashboard Light](screenshots/exdashboardlight.png) |
+| Overview    | ![Overview Dark](screenshots/exviewdark.png) | ![Overview Light](screenshots/exviewlight.png) |
 
 
 
