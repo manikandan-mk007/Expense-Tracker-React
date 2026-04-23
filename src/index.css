@@ -4,39 +4,35 @@
   --font-display: "DM Serif Display", Georgia, serif;
   --font-sans: "DM Sans", system-ui, sans-serif;
 
-  --color-surface-50: #fafaf9;
-  --color-surface-100: #f5f4f0;
-  --color-surface-200: #e8e6df;
-  --color-surface-300: #d4d0c5;
-  --color-surface-800: #2a2925;
-  --color-surface-900: #1c1b18;
-  --color-surface-950: #111009;
+  /* ── Imperial Topaz (Light Mode) ── */
+  --color-topaz-50:  #FFF8E7;
+  --color-topaz-100: #FFF0C4;
+  --color-topaz-200: #FFD77A;
+  --color-topaz-300: #F0B830;
+  --color-topaz-400: #E6A520;
+  --color-topaz-500: #C98A10;
+  --color-topaz-600: #A56E08;
+  --color-topaz-700: #7A4A00;
+  --color-topaz-800: #5C3600;
+  --color-topaz-900: #3D2300;
 
-  --color-ink-50: #fafaf9;
-  --color-ink-200: #e8e6df;
-  --color-ink-400: #8f8b7e;
-  --color-ink-600: #5a5749;
-  --color-ink-800: #2a2925;
-  --color-ink-900: #1c1b18;
+  /* ── Platinum Mist (Dark Mode) ── */
+  --color-mist-50:  #F5F6F7;
+  --color-mist-100: #E0E2E5;
+  --color-mist-200: #C1C4C8;
+  --color-mist-300: #9EA3A9;
+  --color-mist-400: #7B7F85;
+  --color-mist-500: #5E6268;
+  --color-mist-600: #44474D;
+  --color-mist-700: #363A40;
+  --color-mist-800: #2B2E33;
+  --color-mist-900: #1E2025;
+  --color-mist-950: #13151A;
 
-  --color-sage-300: #b8c9ae;
-  --color-sage-400: #96b089;
-  --color-sage-500: #738f66;
-  --color-sage-600: #567049;
-  --color-sage-700: #3f5434;
-
-  --color-amber-300: #f0c97a;
-  --color-amber-400: #e8b84a;
-  --color-amber-500: #d4971f;
-
-  --color-rose-300: #f0a898;
-  --color-rose-400: #e8826e;
-  --color-rose-500: #d45e47;
-  --color-rose-600: #b84330;
-
-  --color-sky-300: #98c4d8;
-  --color-sky-400: #6aaac4;
-  --color-sky-500: #4a8fa8;
+  /* ── Semantic aliases ── */
+  --color-income:  #E6A520;
+  --color-expense: #C95050;
+  --color-balance: #7A4A00;
 }
 
 *, *::before, *::after {
@@ -51,15 +47,17 @@ body {
   font-family: var(--font-sans);
   margin: 0;
   padding: 0;
+  background-color: var(--color-topaz-50);
+  color: var(--color-topaz-800);
 }
 
-/* Dark mode class-based */
+/* ── Dark mode ───────────────────────────── */
 .dark body {
-  background-color: var(--color-surface-950);
-  color: var(--color-ink-50);
+  background-color: var(--color-mist-950);
+  color: var(--color-mist-100);
 }
 
-/* Custom scrollbar */
+/* ── Scrollbar ───────────────────────────── */
 ::-webkit-scrollbar {
   width: 6px;
 }
@@ -67,33 +65,57 @@ body {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--color-surface-300);
+  background: var(--color-topaz-200);
   border-radius: 3px;
 }
 .dark ::-webkit-scrollbar-thumb {
-  background: var(--color-surface-800);
+  background: var(--color-mist-600);
 }
 
-/* Smooth transitions for theme toggle */
+/* ── Theme transitions ───────────────────── */
 *, *::before, *::after {
-  transition-property: background-color, border-color, color;
+  transition-property: background-color, border-color, color, box-shadow;
   transition-duration: 200ms;
   transition-timing-function: ease;
 }
 
-/* Override transition for interactive elements */
 button, a, input, select, textarea {
   transition-duration: 150ms;
 }
 
-/* Chart tooltip */
+/* ── Chart tooltip ───────────────────────── */
 .recharts-tooltip-wrapper {
   outline: none !important;
 }
 
-/* Number input hide arrows */
+/* ── Number input — hide arrows ──────────── */
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
+/* ── Utility classes for the theme ──────── */
+
+/* Surfaces */
+.bg-surface        { background-color: var(--color-topaz-50); }
+.bg-surface-card   { background-color: var(--color-topaz-100); }
+.bg-surface-raised { background-color: #ffffff; }
+.dark .bg-surface        { background-color: var(--color-mist-950); }
+.dark .bg-surface-card   { background-color: var(--color-mist-900); }
+.dark .bg-surface-raised { background-color: var(--color-mist-800); }
+
+/* Borders */
+.border-theme  { border-color: var(--color-topaz-200); }
+.dark .border-theme { border-color: var(--color-mist-700); }
+
+/* Primary accent */
+.text-accent        { color: var(--color-topaz-500); }
+.bg-accent          { background-color: var(--color-topaz-400); }
+.bg-accent-hover    { background-color: var(--color-topaz-500); }
+.dark .text-accent  { color: var(--color-topaz-300); }
+.dark .bg-accent    { background-color: var(--color-topaz-600); }
+
+/* Muted text */
+.text-muted      { color: var(--color-topaz-600); }
+.dark .text-muted { color: var(--color-mist-400); }

@@ -12,7 +12,6 @@ export default function FilterBar() {
     filter.category !== 'all' ||
     filter.search.trim() !== '';
 
-  // Merge categories based on selected type
   const categoryOptions =
     filter.type === TRANSACTION_TYPES.INCOME
       ? INCOME_CATEGORIES
@@ -23,23 +22,30 @@ export default function FilterBar() {
   const selectClass = `
     px-3 py-2 rounded-xl text-sm outline-none cursor-pointer
     border transition-all duration-150
-    bg-[#f5f4f0] dark:bg-[#1c1b18]
-    text-[#1c1b18] dark:text-[#fafaf9]
-    border-transparent dark:border-[#2a2925]
-    focus:border-[#567049] focus:ring-2 focus:ring-[#567049]/20
+    ${isDark
+      ? 'bg-[#2B2E33] text-[#F5F6F7] border-[#363A40] focus:border-[#E6A520] focus:ring-2 focus:ring-[#E6A520]/20'
+      : 'bg-[#FFF0C4] text-[#3D2300] border-[#FFD77A] focus:border-[#E6A520] focus:ring-2 focus:ring-[#E6A520]/30'}
   `;
 
   return (
     <div className={`
-      rounded-2xl p-4 space-y-3
-      ${isDark ? 'bg-[#1c1b18] border border-[#2a2925]' : 'bg-white border border-[#e8e6df]'}
+      rounded-2xl p-4 space-y-3 border
+      ${isDark
+        ? 'bg-[#1E2025] border-[#363A40]'
+        : 'bg-white border-[#FFD77A]'}
     `}>
+      {/* Header row */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <SlidersHorizontal size={14} className={isDark ? 'text-[#8f8b7e]' : 'text-[#5a5749]'} />
-          <span className={`text-sm font-medium ${isDark ? 'text-[#fafaf9]' : 'text-[#1c1b18]'}`}>Filters</span>
+          <SlidersHorizontal
+            size={14}
+            className={isDark ? 'text-[#7B7F85]' : 'text-[#A56E08]'}
+          />
+          <span className={`text-sm font-medium ${isDark ? 'text-[#F5F6F7]' : 'text-[#3D2300]'}`}>
+            Filters
+          </span>
           {hasActiveFilters && (
-            <span className="inline-flex items-center justify-center w-4 h-4 text-[10px] font-bold rounded-full bg-[#567049] text-white">
+            <span className="inline-flex items-center justify-center w-4 h-4 text-[10px] font-bold rounded-full bg-[#E6A520] text-white">
               !
             </span>
           )}
@@ -47,8 +53,10 @@ export default function FilterBar() {
         {hasActiveFilters && (
           <button
             onClick={resetFilters}
-            className={`text-xs flex items-center gap-1 cursor-pointer
-              ${isDark ? 'text-[#8f8b7e] hover:text-[#fafaf9]' : 'text-[#5a5749] hover:text-[#1c1b18]'}
+            className={`text-xs flex items-center gap-1 cursor-pointer transition-colors
+              ${isDark
+                ? 'text-[#7B7F85] hover:text-[#F5F6F7]'
+                : 'text-[#A56E08] hover:text-[#3D2300]'}
             `}
           >
             <X size={12} /> Clear all
@@ -58,7 +66,11 @@ export default function FilterBar() {
 
       {/* Search */}
       <div className="relative">
-        <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#8f8b7e]" />
+        <Search
+          size={14}
+          className={`absolute left-3 top-1/2 -translate-y-1/2
+            ${isDark ? 'text-[#7B7F85]' : 'text-[#A56E08]'}`}
+        />
         <input
           type="text"
           placeholder="Search transactions…"
@@ -66,25 +78,28 @@ export default function FilterBar() {
           onChange={(e) => setFilter({ search: e.target.value })}
           className={`
             w-full pl-9 pr-4 py-2 rounded-xl text-sm outline-none
-            bg-[#f5f4f0] dark:bg-[#111009]
-            text-[#1c1b18] dark:text-[#fafaf9]
-            border border-transparent dark:border-[#2a2925]
-            placeholder:text-[#8f8b7e]
-            focus:border-[#567049] focus:ring-2 focus:ring-[#567049]/20
-            transition-all duration-150
+            border transition-all duration-150
+            placeholder:opacity-60
+            ${isDark
+              ? 'bg-[#2B2E33] text-[#F5F6F7] border-[#363A40] placeholder:text-[#7B7F85] focus:border-[#E6A520] focus:ring-2 focus:ring-[#E6A520]/20'
+              : 'bg-[#FFF8E7] text-[#3D2300] border-[#FFD77A] placeholder:text-[#A56E08] focus:border-[#E6A520] focus:ring-2 focus:ring-[#E6A520]/30'}
           `}
         />
         {filter.search && (
           <button
             onClick={() => setFilter({ search: '' })}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-[#8f8b7e] hover:text-[#1c1b18] dark:hover:text-[#fafaf9] cursor-pointer"
+            className={`absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer transition-colors
+              ${isDark
+                ? 'text-[#7B7F85] hover:text-[#F5F6F7]'
+                : 'text-[#A56E08] hover:text-[#3D2300]'}
+            `}
           >
             <X size={13} />
           </button>
         )}
       </div>
 
-      {/* Filter row */}
+      {/* Filter selects */}
       <div className="grid grid-cols-3 gap-2">
         {/* Period */}
         <select

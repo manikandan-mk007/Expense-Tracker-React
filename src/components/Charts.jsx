@@ -7,15 +7,17 @@ import { useExpense } from '../context/ExpenseContext';
 import { useTransactions } from '../hooks/useTransactions';
 import { formatCurrency } from '../utils/helpers';
 
-// ── Custom Tooltip for area chart ─────────────────────────────────────────────
+// ── Custom Tooltip ────────────────────────────────────────────────────────────
 function AreaTooltip({ active, payload, label, isDark }) {
   if (!active || !payload?.length) return null;
   return (
     <div className={`
       rounded-xl px-3 py-2 shadow-lg text-xs
-      ${isDark ? 'bg-[#2a2925] border border-[#3a3930]' : 'bg-white border border-[#e8e6df]'}
+      ${isDark
+        ? 'bg-[#2B2E33] border border-[#363A40]'
+        : 'bg-white border border-[#FFD77A]'}
     `}>
-      <p className={`font-semibold mb-1 ${isDark ? 'text-[#fafaf9]' : 'text-[#1c1b18]'}`}>{label}</p>
+      <p className={`font-semibold mb-1 ${isDark ? 'text-[#F5F6F7]' : 'text-[#3D2300]'}`}>{label}</p>
       {payload.map((p) => (
         <p key={p.name} style={{ color: p.color }}>
           {p.name === 'income' ? 'Income' : 'Expenses'}: {formatCurrency(p.value)}
@@ -25,7 +27,7 @@ function AreaTooltip({ active, payload, label, isDark }) {
   );
 }
 
-// ── Custom Pie active shape ────────────────────────────────────────────────────
+// ── Custom Pie active shape ───────────────────────────────────────────────────
 function ActiveShape(props) {
   const { cx, cy, innerRadius, outerRadius, startAngle, endAngle, fill } = props;
   return (
@@ -49,13 +51,19 @@ export function SpendingChart() {
   const { dailySpending } = useTransactions();
   const isDark = theme === 'dark';
 
-  const gridColor = isDark ? '#2a2925' : '#e8e6df';
-  const axisColor = isDark ? '#5a5749' : '#8f8b7e';
+  const gridColor  = isDark ? '#363A40' : '#FFD77A';
+  const axisColor  = isDark ? '#7B7F85' : '#A56E08';
 
   return (
-    <div className={`rounded-2xl p-5 ${isDark ? 'bg-[#1c1b18] border border-[#2a2925]' : 'bg-white border border-[#e8e6df]'}`}>
+    <div className={`
+      rounded-2xl p-5 border
+      ${isDark
+        ? 'bg-[#1E2025] border-[#363A40]'
+        : 'bg-white border-[#FFD77A]'}
+    `}>
       <h3
-        className={`text-base font-semibold mb-4 ${isDark ? 'text-[#fafaf9]' : 'text-[#1c1b18]'}`}
+        className={`text-base font-semibold mb-4
+          ${isDark ? 'text-[#F5F6F7]' : 'text-[#3D2300]'}`}
         style={{ fontFamily: 'DM Serif Display, Georgia, serif' }}
       >
         14-Day Overview
@@ -64,29 +72,29 @@ export function SpendingChart() {
         <AreaChart data={dailySpending} margin={{ top: 4, right: 4, left: -20, bottom: 0 }}>
           <defs>
             <linearGradient id="gradIncome" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#738f66" stopOpacity={0.25} />
-              <stop offset="95%" stopColor="#738f66" stopOpacity={0} />
+              <stop offset="5%"  stopColor="#E6A520" stopOpacity={0.30} />
+              <stop offset="95%" stopColor="#E6A520" stopOpacity={0} />
             </linearGradient>
             <linearGradient id="gradExpense" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#d45e47" stopOpacity={0.25} />
-              <stop offset="95%" stopColor="#d45e47" stopOpacity={0} />
+              <stop offset="5%"  stopColor="#C95050" stopOpacity={0.25} />
+              <stop offset="95%" stopColor="#C95050" stopOpacity={0} />
             </linearGradient>
           </defs>
           <CartesianGrid strokeDasharray="3 3" stroke={gridColor} vertical={false} />
           <XAxis dataKey="date" tick={{ fontSize: 10, fill: axisColor }} tickLine={false} axisLine={false} />
           <YAxis tick={{ fontSize: 10, fill: axisColor }} tickLine={false} axisLine={false} />
           <Tooltip content={<AreaTooltip isDark={isDark} />} />
-          <Area type="monotone" dataKey="income" stroke="#738f66" strokeWidth={2} fill="url(#gradIncome)" dot={false} />
-          <Area type="monotone" dataKey="expenses" stroke="#d45e47" strokeWidth={2} fill="url(#gradExpense)" dot={false} />
+          <Area type="monotone" dataKey="income"   stroke="#E6A520" strokeWidth={2} fill="url(#gradIncome)"  dot={false} />
+          <Area type="monotone" dataKey="expenses" stroke="#C95050" strokeWidth={2} fill="url(#gradExpense)" dot={false} />
         </AreaChart>
       </ResponsiveContainer>
 
       {/* Legend */}
       <div className="flex gap-4 mt-3 justify-center">
-        {[{ color: '#738f66', label: 'Income' }, { color: '#d45e47', label: 'Expenses' }].map((l) => (
+        {[{ color: '#E6A520', label: 'Income' }, { color: '#C95050', label: 'Expenses' }].map((l) => (
           <div key={l.label} className="flex items-center gap-1.5">
             <span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ backgroundColor: l.color }} />
-            <span className={`text-xs ${isDark ? 'text-[#8f8b7e]' : 'text-[#5a5749]'}`}>{l.label}</span>
+            <span className={`text-xs ${isDark ? 'text-[#7B7F85]' : 'text-[#A56E08]'}`}>{l.label}</span>
           </div>
         ))}
       </div>
@@ -101,16 +109,20 @@ export function CategoryChart() {
   const isDark = theme === 'dark';
   const [activeIndex, setActiveIndex] = useState(0);
 
+  const cardClass = `rounded-2xl p-5 border ${
+    isDark ? 'bg-[#1E2025] border-[#363A40]' : 'bg-white border-[#FFD77A]'
+  }`;
+  const titleClass = `text-base font-semibold mb-4 ${
+    isDark ? 'text-[#F5F6F7]' : 'text-[#3D2300]'
+  }`;
+
   if (expensesByCategory.length === 0) {
     return (
-      <div className={`rounded-2xl p-5 ${isDark ? 'bg-[#1c1b18] border border-[#2a2925]' : 'bg-white border border-[#e8e6df]'}`}>
-        <h3
-          className={`text-base font-semibold mb-4 ${isDark ? 'text-[#fafaf9]' : 'text-[#1c1b18]'}`}
-          style={{ fontFamily: 'DM Serif Display, Georgia, serif' }}
-        >
+      <div className={cardClass}>
+        <h3 className={titleClass} style={{ fontFamily: 'DM Serif Display, Georgia, serif' }}>
           Expense Breakdown
         </h3>
-        <p className={`text-sm text-center py-10 ${isDark ? 'text-[#5a5749]' : 'text-[#8f8b7e]'}`}>
+        <p className={`text-sm text-center py-10 ${isDark ? 'text-[#7B7F85]' : 'text-[#A56E08]'}`}>
           No expense data available
         </p>
       </div>
@@ -121,11 +133,8 @@ export function CategoryChart() {
   const active = expensesByCategory[activeIndex] || expensesByCategory[0];
 
   return (
-    <div className={`rounded-2xl p-5 ${isDark ? 'bg-[#1c1b18] border border-[#2a2925]' : 'bg-white border border-[#e8e6df]'}`}>
-      <h3
-        className={`text-base font-semibold mb-4 ${isDark ? 'text-[#fafaf9]' : 'text-[#1c1b18]'}`}
-        style={{ fontFamily: 'DM Serif Display, Georgia, serif' }}
-      >
+    <div className={cardClass}>
+      <h3 className={titleClass} style={{ fontFamily: 'DM Serif Display, Georgia, serif' }}>
         Expense Breakdown
       </h3>
 
@@ -152,11 +161,10 @@ export function CategoryChart() {
           </ResponsiveContainer>
           {/* Center label */}
           <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-            <p className={`text-[11px] ${isDark ? 'text-[#8f8b7e]' : 'text-[#5a5749]'}`}>
+            <p className={`text-[11px] ${isDark ? 'text-[#7B7F85]' : 'text-[#A56E08]'}`}>
               {active?.name?.split(' ')[0]}
             </p>
-            <p className={`text-sm font-bold ${isDark ? 'text-[#fafaf9]' : 'text-[#1c1b18]'}`}
-              style={{ color: active?.color }}>
+            <p className="text-sm font-bold" style={{ color: active?.color }}>
               {totalExpenses > 0 ? Math.round((active?.value / totalExpenses) * 100) : 0}%
             </p>
           </div>
@@ -169,16 +177,16 @@ export function CategoryChart() {
               key={item.name}
               className={`flex items-center gap-2 cursor-default rounded-lg px-2 py-1 transition-colors
                 ${i === activeIndex
-                  ? isDark ? 'bg-[#2a2925]' : 'bg-[#f5f4f0]'
+                  ? isDark ? 'bg-[#2B2E33]' : 'bg-[#FFF0C4]'
                   : ''}
               `}
               onMouseEnter={() => setActiveIndex(i)}
             >
               <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: item.color }} />
-              <span className={`text-xs flex-1 truncate ${isDark ? 'text-[#8f8b7e]' : 'text-[#5a5749]'}`}>
+              <span className={`text-xs flex-1 truncate ${isDark ? 'text-[#7B7F85]' : 'text-[#A56E08]'}`}>
                 {item.name}
               </span>
-              <span className={`text-xs font-medium flex-shrink-0 ${isDark ? 'text-[#fafaf9]' : 'text-[#1c1b18]'}`}>
+              <span className={`text-xs font-medium flex-shrink-0 ${isDark ? 'text-[#F5F6F7]' : 'text-[#3D2300]'}`}>
                 {formatCurrency(item.value)}
               </span>
             </div>

@@ -13,11 +13,9 @@ export default function TransactionItem({ transaction, onDelete }) {
     <div className={`
       group flex items-center gap-3 px-4 py-3 rounded-xl
       transition-all duration-150
-      ${isDark
-        ? 'hover:bg-[#1c1b18]'
-        : 'hover:bg-[#fafaf9]'}
+      ${isDark ? 'hover:bg-[#2B2E33]' : 'hover:bg-[#FFF8E7]'}
     `}>
-      {/* Category dot / badge */}
+      {/* Category badge */}
       <div
         className="w-9 h-9 rounded-xl flex-shrink-0 flex items-center justify-center text-sm font-semibold"
         style={{ backgroundColor: meta.bg, color: meta.color }}
@@ -27,7 +25,7 @@ export default function TransactionItem({ transaction, onDelete }) {
 
       {/* Description + meta */}
       <div className="flex-1 min-w-0">
-        <p className={`text-sm font-medium truncate ${isDark ? 'text-[#fafaf9]' : 'text-[#1c1b18]'}`}>
+        <p className={`text-sm font-medium truncate ${isDark ? 'text-[#F5F6F7]' : 'text-[#3D2300]'}`}>
           {transaction.description}
         </p>
         <div className="flex items-center gap-2 mt-0.5">
@@ -37,19 +35,18 @@ export default function TransactionItem({ transaction, onDelete }) {
           >
             {meta.label}
           </span>
-          <span className={`text-[11px] ${isDark ? 'text-[#5a5749]' : 'text-[#8f8b7e]'}`}>
+          <span className={`text-[11px] ${isDark ? 'text-[#5E6268]' : 'text-[#A56E08]'}`}>
             {formatDate(transaction.date, 'MMM d')}
           </span>
         </div>
       </div>
 
-      {/* Amount */}
+      {/* Amount + delete */}
       <div className="flex items-center gap-2 flex-shrink-0">
-        <span className={`text-sm font-semibold ${isIncome ? 'text-[#738f66]' : 'text-[#d45e47]'}`}>
+        <span className={`text-sm font-semibold
+          ${isIncome ? 'text-[#E6A520]' : 'text-[#C95050]'}`}>
           {isIncome ? '+' : '−'}{formatCurrency(transaction.amount)}
         </span>
-
-        {/* Delete button - visible on hover */}
         <button
           onClick={() => onDelete(transaction.id)}
           aria-label="Delete transaction"
@@ -57,8 +54,8 @@ export default function TransactionItem({ transaction, onDelete }) {
             w-7 h-7 rounded-lg flex items-center justify-center
             opacity-0 group-hover:opacity-100 transition-all duration-150 cursor-pointer
             ${isDark
-              ? 'text-[#5a5749] hover:text-[#d45e47] hover:bg-[#2a2925]'
-              : 'text-[#d4d0c5] hover:text-[#d45e47] hover:bg-[#fdf0ee]'}
+              ? 'text-[#5E6268] hover:text-[#C95050] hover:bg-[#363A40]'
+              : 'text-[#FFD77A] hover:text-[#C95050] hover:bg-[#FFF0C4]'}
           `}
         >
           <Trash2 size={13} />

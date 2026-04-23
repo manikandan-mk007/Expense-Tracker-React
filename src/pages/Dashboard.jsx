@@ -10,17 +10,18 @@ export default function Dashboard() {
   const isDark = theme === 'dark';
 
   return (
-    <div className={`min-h-screen ${isDark ? 'bg-[#111009]' : 'bg-[#f5f4f0]'}`}>
+    <div className={`min-h-screen ${isDark ? 'bg-[#13151A]' : 'bg-[#FFF8E7]'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Page heading */}
         <div className="mb-8">
           <h1
-            className={`text-3xl font-semibold tracking-tight ${isDark ? 'text-[#fafaf9]' : 'text-[#1c1b18]'}`}
+            className={`text-3xl font-semibold tracking-tight
+              ${isDark ? 'text-[#F5F6F7]' : 'text-[#3D2300]'}`}
             style={{ fontFamily: 'DM Serif Display, Georgia, serif' }}
           >
             Dashboard
           </h1>
-          <p className={`text-sm mt-1 ${isDark ? 'text-[#5a5749]' : 'text-[#8f8b7e]'}`}>
+          <p className={`text-sm mt-1 ${isDark ? 'text-[#5E6268]' : 'text-[#A56E08]'}`}>
             Track your income and spending in one place
           </p>
         </div>
